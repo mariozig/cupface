@@ -1,2 +1,9 @@
 %h1
   = @player.full_name
+
+= image_tag(@player.image)
+
+%p
+  Plays for
+  %strong
+    = @player.team.name
