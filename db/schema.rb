@@ -11,10 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140624020929) do
+ActiveRecord::Schema.define(version: 20140624054550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "players", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "nickname"
+    t.string   "nationality"
+    t.integer  "age"
+    t.datetime "birth_date"
+    t.string   "birth_country"
+    t.string   "birth_city"
+    t.string   "position"
+    t.string   "foot"
+    t.string   "image"
+    t.integer  "height_cm"
+    t.integer  "weight_kg"
+    t.integer  "goals"
+    t.integer  "own_goals"
+    t.integer  "penalty_goals"
+    t.integer  "assists"
+    t.string   "kimono_team_id"
+    t.string   "kimono_club_id"
+    t.string   "kimono_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "team_id"
+  end
+
+  add_index "players", ["team_id"], name: "index_players_on_team_id", using: :btree
 
   create_table "teams", force: true do |t|
     t.string   "name"
