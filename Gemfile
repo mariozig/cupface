@@ -42,3 +42,5 @@ gem 'unicorn'
 gem 'rspec-rails'
 
 gem 'rest_client'
+
+gem 'figaro'
