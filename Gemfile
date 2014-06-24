@@ -40,3 +40,5 @@ gem 'unicorn'
 
 # Use rspec
 gem 'rspec-rails'
+
+gem 'rest_client'
