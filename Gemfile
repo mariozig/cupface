@@ -44,3 +44,5 @@ gem 'rspec-rails'
 gem 'rest_client'
 
 gem 'figaro'
+
+gem 'haml-rails'
