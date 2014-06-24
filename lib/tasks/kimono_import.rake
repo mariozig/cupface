@@ -14,6 +14,9 @@ namespace :kimono_import do
   desc "Import all team data"
   task team_data: :environment do
     Team.all.each do |team|
+      # Kimono is not very dependable when hammered... play nice
+      sleep 1
+
       url = "http://worldcup.kimonolabs.com/api/teams/#{team.kimono_id}?apikey=#{Figaro.env.kimono_api_key}"
       puts "Looking up: #{url}"
 
@@ -46,6 +49,9 @@ namespace :kimono_import do
   desc "Import all player data"
   task player_data: :environment do
     Player.all.each do |player|
+      # Kimono is not very dependable when hammered... play nice
+      sleep 1
+
       url = "http://worldcup.kimonolabs.com/api/players/#{player.kimono_id}?apikey=#{Figaro.env.kimono_api_key}"
       puts "Looking up: #{url}"
 
