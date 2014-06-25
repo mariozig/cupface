@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140625022810) do
+ActiveRecord::Schema.define(version: 20140625024842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20140625022810) do
   create_table "matches", force: true do |t|
     t.integer  "home_score"
     t.integer  "away_score"
-    t.integer  "current_game_minutes"
+    t.integer  "current_game_minute"
     t.datetime "start_time"
     t.string   "kimono_home_team_id"
     t.string   "kimono_away_team_id"
