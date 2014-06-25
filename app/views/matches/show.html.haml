@@ -1,0 +1,15 @@
+%h1
+  = link_to @match.start_time.to_date, @match
+  #{@match.home_team.name} vs #{@match.away_team.name}
+
+%h2
+  Scores
+
+%p
+  #{@match.home_team.name}: #{@match.home_score}
+
+%p
+  #{@match.away_team.name}: #{@match.away_score}
+
+%h4
+  #{@match.winning_team.name} wins!
