@@ -92,5 +92,34 @@ namespace :kimono_import do
     end
   end
 
+  desc "Import all team data"
+  task match_data: :environment do
+    Match.all.each do |match|
+      # Kimono is not very dependable when hammered... play nice
+      sleep 1
+
+      url = "http://worldcup.kimonolabs.com/api/matches/#{match.kimono_id}?apikey=#{Figaro.env.kimono_api_key}"
+      puts "Looking up: #{url}"
+
+      match_response = RestClient.get(url)
+      match_data = JSON.parse(match_response)
+
+      match.home_score = match_data['homeScore']
+      match.away_score = match_data['awayScore']
+      match.current_game_minute = match_data['currentGameMinute']
+      match.start_time = match_data['startTime']
+      match.status = match_data['status']
+      match.venue = match_data['venue']
+      match.group = match_data['group']
+      match.kimono_away_team_id = match_data['awayTeamId']
+      match.kimono_home_team_id = match_data['homeTeamId']
+
+      # Associations
+      match.away_team = Team.find_or_create_by(kimono_id: match.kimono_away_team_id)
+      match.home_team = Team.find_or_create_by(kimono_id: match.kimono_home_team_id)
+
+      match.save!
+    end
+  end
 
 end
