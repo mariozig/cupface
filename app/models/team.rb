@@ -6,6 +6,10 @@ class Team < ActiveRecord::Base
   default_scope { order(:name) }
 
   def matches
-    home_matches + away_matches
+    matches_table = Match.arel_table
+    Match.where(
+            matches_table[:home_team_id].eq(id)
+            .or(matches_table[:away_team_id].eq(id))
+          )
   end
 end
