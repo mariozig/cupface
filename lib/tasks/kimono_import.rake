@@ -11,6 +11,12 @@ namespace :kimono_import do
     JSON.parse(players_response).each { |player| Player.create!(kimono_id: player['id']) }
   end
 
+  desc "Import all match ids"
+  task match_ids: :environment do
+    matches_response = RestClient.get "http://worldcup.kimonolabs.com/api/matches?limit=1000&apikey=#{Figaro.env.kimono_api_key}"
+    JSON.parse(matches_response).each { |match| Match.create!(kimono_id: match['id']) }
+  end
+
   desc "Import all team data"
   task team_data: :environment do
     Team.all.each do |team|
