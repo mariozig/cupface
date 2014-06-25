@@ -10,3 +10,11 @@
   - @team.players.each do |player|
     %li
       = link_to "#{player.last_name}, #{player.first_name}", player
+
+%h3
+  Matches
+
+%ul
+  - @team.matches.each do |match|
+    %li
+      = link_to match.start_time.to_date, match
