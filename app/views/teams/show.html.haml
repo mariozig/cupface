@@ -1,0 +1,12 @@
+%h1
+  = @team.name
+
+= image_tag(@team.logo)
+
+%h2
+  Players on team #{@team.name}
+
+%ul
+  - @team.players.each do |player|
+    %li
+      = link_to "#{player.last_name}, #{player.first_name}", player

@@ -6,10 +6,10 @@
   Scores
 
 %p
-  #{@match.home_team.name}: #{@match.home_score}
+  #{link_to @match.home_team.name, @match.home_team}: #{@match.home_score}
 
 %p
-  #{@match.away_team.name}: #{@match.away_score}
+  #{link_to @match.away_team.name, @match.away_team}: #{@match.away_score}
 
 %h4
   #{@match.winning_team.name} wins!
