@@ -8,4 +8,12 @@ class Match < ActiveRecord::Base
   def winning_team
     home_score > away_score ? home_team : away_team
   end
+
+  def date
+    start_time.to_date
+  end
+
+  def nice_title
+    "#{date} - #{home_team.name} vs #{away_team.name}"
+  end
 end
