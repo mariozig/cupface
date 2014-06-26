@@ -46,3 +46,5 @@ gem 'rest_client'
 gem 'figaro'
 
 gem 'haml-rails'
+
+gem 'paperclip'
