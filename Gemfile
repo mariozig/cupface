@@ -48,3 +48,5 @@ gem 'figaro'
 gem 'haml-rails'
 
 gem 'paperclip'
+
+gem 'aws-sdk'
