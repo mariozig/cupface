@@ -50,3 +50,5 @@ gem 'haml-rails'
 gem 'paperclip'
 
 gem 'aws-sdk'
+
+gem 'bourbon'
