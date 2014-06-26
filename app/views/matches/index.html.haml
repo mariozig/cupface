@@ -2,6 +2,6 @@
 
 - @matches.each do |match|
   %h2
-    = link_to match.start_time.to_date, match
+    = link_to match.date, match
     #{match.home_team.name} vs #{match.away_team.name}
 
