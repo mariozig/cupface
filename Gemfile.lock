@@ -31,6 +31,10 @@ GEM
     aws-sdk (1.44.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
+    bitters (0.10.0)
+      bourbon (>= 3.2)
+      sass (>= 3.2)
+      thor
     bourbon (3.2.3)
       sass (~> 3.2)
       thor
@@ -168,6 +172,7 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk
+  bitters
   bourbon
   coffee-rails (~> 4.0.0)
   figaro

@@ -52,3 +52,5 @@ gem 'paperclip'
 gem 'aws-sdk'
 
 gem 'bourbon'
+
+gem 'bitters'
