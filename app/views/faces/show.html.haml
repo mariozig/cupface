@@ -1,0 +1,18 @@
+%h1
+  Another Fantastic Face
+
+%h2
+  = link_to @face.player.full_name, @face.player
+  of team
+  = link_to @face.player.team.name, @face.player.team
+
+%h2
+  Game Minute
+%p
+  = @face.game_minute
+
+%h3
+  Dat Face
+
+= image_tag @face.image.url(:medium)
+

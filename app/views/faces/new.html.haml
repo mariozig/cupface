@@ -1,0 +1,28 @@
+%h1 Add a Face
+
+= form_for @face, html:{ multipart: true }  do |f|
+  - if @face.errors.any?
+    %h2
+      = pluralize @face.errors.count, 'error'
+    %ul
+      - @face.errors.full_messages.each do |m|
+        %li #{m}
+
+  %p
+    = f.label :match_id
+    = f.collection_select :match_id, Match.all, :id, :nice_title
+
+  %p
+    = f.label :player_id
+    = f.collection_select :player_id, Player.all, :id, :full_name
+
+  %p
+    = f.label :game_minute
+    = f.text_field :game_minute
+
+  %p
+    = f.label :image
+    = f.file_field :image
+
+  %p
+    = f.submit
