@@ -28,29 +28,12 @@ namespace :kimono_import do
     end
   end
 
-  desc "Import all player ids"
-  task player_ids: :environment do
-    players_response = RestClient.get "http://worldcup.kimonolabs.com/api/players?limit=1000&apikey=#{ENV['KIMONO_API_KEY']}"
-    JSON.parse(players_response).each { |player| Player.create!(kimono_id: player['id']) }
-  end
+  desc "Import/update players"
+  task players: :environment do
+    players_data = json_for "http://worldcup.kimonolabs.com/api/players?limit=1000&apikey=#{ENV['KIMONO_API_KEY']}"
 
-  desc "Import all match ids"
-  task match_ids: :environment do
-    matches_response = RestClient.get "http://worldcup.kimonolabs.com/api/matches?limit=1000&apikey=#{ENV['KIMONO_API_KEY']}"
-    JSON.parse(matches_response).each { |match| Match.create!(kimono_id: match['id']) }
-  end
-
-  desc "Import all player data"
-  task player_data: :environment do
-    Player.all.each do |player|
-      # Kimono is not very dependable when hammered... play nice
-      sleep 1
-
-      url = "http://worldcup.kimonolabs.com/api/players/#{player.kimono_id}?apikey=#{ENV['KIMONO_API_KEY']}"
-      puts "Looking up: #{url}"
-
-      player_response = RestClient.get(url)
-      player_data = JSON.parse(player_response)
+    players_data.each do |player_data|
+      player = Player.find_or_create_by!(kimono_id: player_data['id'])
 
       player.first_name = player_data['firstName']
       player.last_name = player_data['lastName']
@@ -80,17 +63,12 @@ namespace :kimono_import do
     end
   end
 
-  desc "Import all team data"
-  task match_data: :environment do
-    Match.all.each do |match|
-      # Kimono is not very dependable when hammered... play nice
-      sleep 1
+  desc "Import/update matches"
+  task matches: :environment do
+    matches_data = json_for "http://worldcup.kimonolabs.com/api/matches?limit=1000&apikey=#{ENV['KIMONO_API_KEY']}"
 
-      url = "http://worldcup.kimonolabs.com/api/matches/#{match.kimono_id}?apikey=#{ENV['KIMONO_API_KEY']}"
-      puts "Looking up: #{url}"
-
-      match_response = RestClient.get(url)
-      match_data = JSON.parse(match_response)
+    matches_data.each do |match_data|
+      match = Match.find_or_create_by!(kimono_id: match_data['id'])
 
       match.home_score = match_data['homeScore']
       match.away_score = match_data['awayScore']
@@ -111,8 +89,9 @@ namespace :kimono_import do
   end
 
   def json_for(url)
+    puts "Looking up: #{url}"
+
     response = RestClient.get url
     JSON.parse response
   end
-
 end
