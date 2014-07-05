@@ -9,7 +9,6 @@ namespace :kimono_import do
       team.name = team_data['name']
       team.logo = team_data['logo']
       team.website = team_data['website']
-      team.website = team_data['website']
       team.founded_year = team_data['foundedYear']
       team.address = team_data['address']
       team.home_stadium = team_data['homeStadium']
