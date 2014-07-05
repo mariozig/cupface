@@ -1,33 +1,10 @@
 namespace :kimono_import do
-  desc "Import all team ids"
-  task team_ids: :environment do
-    teams_response = RestClient.get "http://worldcup.kimonolabs.com/api/teams?limit=1000&apikey=#{ENV['KIMONO_API_KEY']}"
-    JSON.parse(teams_response).each { |team| Team.create!(kimono_id: team['id']) }
-  end
+  desc "Import/update teams"
+  task teams: :environment do
+    teams_data = json_for "http://worldcup.kimonolabs.com/api/teams?limit=1000&apikey=#{ENV['KIMONO_API_KEY']}"
 
-  desc "Import all player ids"
-  task player_ids: :environment do
-    players_response = RestClient.get "http://worldcup.kimonolabs.com/api/players?limit=1000&apikey=#{ENV['KIMONO_API_KEY']}"
-    JSON.parse(players_response).each { |player| Player.create!(kimono_id: player['id']) }
-  end
-
-  desc "Import all match ids"
-  task match_ids: :environment do
-    matches_response = RestClient.get "http://worldcup.kimonolabs.com/api/matches?limit=1000&apikey=#{ENV['KIMONO_API_KEY']}"
-    JSON.parse(matches_response).each { |match| Match.create!(kimono_id: match['id']) }
-  end
-
-  desc "Import all team data"
-  task team_data: :environment do
-    Team.all.each do |team|
-      # Kimono is not very dependable when hammered... play nice
-      sleep 1
-
-      url = "http://worldcup.kimonolabs.com/api/teams/#{team.kimono_id}?apikey=#{ENV['KIMONO_API_KEY']}"
-      puts "Looking up: #{url}"
-
-      team_response = RestClient.get(url)
-      team_data = JSON.parse(team_response)
+    teams_data.each do |team_data|
+      team = Team.find_or_create_by!(kimono_id: team_data['id'])
 
       team.name = team_data['name']
       team.logo = team_data['logo']
@@ -50,6 +27,18 @@ namespace :kimono_import do
 
       team.save!
     end
+  end
+
+  desc "Import all player ids"
+  task player_ids: :environment do
+    players_response = RestClient.get "http://worldcup.kimonolabs.com/api/players?limit=1000&apikey=#{ENV['KIMONO_API_KEY']}"
+    JSON.parse(players_response).each { |player| Player.create!(kimono_id: player['id']) }
+  end
+
+  desc "Import all match ids"
+  task match_ids: :environment do
+    matches_response = RestClient.get "http://worldcup.kimonolabs.com/api/matches?limit=1000&apikey=#{ENV['KIMONO_API_KEY']}"
+    JSON.parse(matches_response).each { |match| Match.create!(kimono_id: match['id']) }
   end
 
   desc "Import all player data"
@@ -120,6 +109,11 @@ namespace :kimono_import do
 
       match.save!
     end
+  end
+
+  def json_for(url)
+    response = RestClient.get url
+    JSON.parse response
   end
 
 end
