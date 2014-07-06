@@ -1,5 +1,6 @@
 class Player < ActiveRecord::Base
   belongs_to :team
+  has_many :faces, as: :faceable
 
   default_scope { order(:last_name) }
 
