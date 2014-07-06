@@ -1,6 +1,6 @@
 class Face < ActiveRecord::Base
   belongs_to :match
-  belongs_to :player
+  belongs_to :faceable, polymorphic: true
 
   has_attached_file :image, styles: { medium: '400x400>', thumb: '200x200>' }
 
